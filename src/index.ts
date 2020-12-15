@@ -31,6 +31,9 @@ export class IndexDBStorage {
     if (option?.version) {
       this.version = option.version
     }
+    if (option?.logger) {
+      this.logger = option.logger
+    }
   }
 
   private log(type: LogType, args: any[]) {
