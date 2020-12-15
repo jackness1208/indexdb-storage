@@ -62,7 +62,8 @@ export class IndexDBStorage {
       res.onupgradeneeded = () => {
         const db = res.result
         if (!db.objectStoreNames.contains(this.storeName)) {
-          db.createObjectStore(this.storeName, { keyPath: 'name' })
+          const store = db.createObjectStore(this.storeName, { keyPath: 'name' })
+          store.createIndex('name', 'name', { unique: true })
         }
       }
     })
