@@ -17,15 +17,17 @@ var dbStorage = new IndexDBStorage({
   name: 'testdb'
 })
 
-dbStorage.setItem('12345', {
-  a: 1,
-  b: {
-    c: 2
-  }
-}).then(function () {
-  dbStorage.getItem('12345').then(function (d) {
-    console.log('===', d)
+dbStorage
+  .setItem('12345', {
+    a: 1,
+    b: {
+      c: 2
+    }
   })
-})
+  .then(function () {
+    dbStorage.getItem('12345').then(function (d) {
+      console.log('===', d)
+    })
+  })
 
 ReactDOM.render(App, document.querySelector('#app'))

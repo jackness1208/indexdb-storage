@@ -3,6 +3,7 @@
 旨在 提供 类似 localstorage 方法的 indexDB 操作
 
 ## 兼容
+
 ie >= 10
 
 ## 安装
@@ -79,4 +80,3 @@ export declare class IndexDBStorage {
   getItem<V = any>(name: string): Promise<V | undefined>
 }
 ```
-

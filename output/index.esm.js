@@ -1,5 +1,5 @@
 /*!
- * indexdbStorage esm 0.1.0
+ * indexdb-storage esm 0.1.0
  * (c) 2020 - 2020 jackness
  * Released under the MIT License.
  */
