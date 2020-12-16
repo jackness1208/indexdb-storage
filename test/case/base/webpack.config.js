@@ -106,7 +106,16 @@ const wConfig = {
                   return {
                     babelrc: false,
                     cacheDirectory: true,
-                    presets: ['@babel/preset-react']
+                    presets: ['@babel/preset-react'],
+                    plugins: [
+                      ['@babel/plugin-proposal-decorators', { legacy: true }],
+                      ['@babel/plugin-proposal-class-properties', { loose: true }],
+                      '@babel/plugin-proposal-function-sent',
+                      '@babel/plugin-proposal-export-namespace-from',
+                      '@babel/plugin-proposal-numeric-separator',
+                      '@babel/plugin-proposal-throw-expressions',
+                      '@babel/plugin-syntax-dynamic-import'
+                    ]
                   }
                 } else {
                   return {}
@@ -177,7 +186,6 @@ const wConfig = {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     // 样式分离插件
     new MiniCssExtractPlugin({
       filename: util.path.join(
@@ -288,9 +296,10 @@ wConfig.plugins = wConfig.plugins.concat(
 // + dev server
 wConfig.devServer = {
   contentBase: config.alias.root,
+  injectClient: false,
   compress: true,
   port: config.proxy.port,
-  hot: true,
+  hot: false,
   publicPath: config.dest.basePath,
   writeToDisk: true,
   async after() {

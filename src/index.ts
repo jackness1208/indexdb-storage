@@ -49,7 +49,7 @@ export class IndexDBStorage {
   }
 
   /** 打开db */
-  public async open(): Promise<IDBDatabase> {
+  public async open(): Promise<IDBDatabase | undefined> {
     const res = window.indexedDB.open(this.name, this.version)
     return await new Promise((resolve) => {
       res.onsuccess = () => {
@@ -57,7 +57,7 @@ export class IndexDBStorage {
       }
       res.onerror = (er) => {
         this.log(LogType.Warn, ['indexDB 初始化失败', er])
-        resolve()
+        resolve(undefined)
       }
       res.onupgradeneeded = () => {
         const db = res.result
@@ -70,12 +70,12 @@ export class IndexDBStorage {
   }
 
   /** 设置 */
-  public async setItem<V = any>(name: string, value: V) {
-    const { storeName, log, isSupported, open } = this
+  public async setItem<V = any>(name: string, value: V): Promise<string | undefined> {
+    const { storeName, isSupported } = this
     if (!isSupported) {
       return
     }
-    const db = await open()
+    const db = await this.open()
 
     if (db) {
       return await new Promise((resolve) => {
@@ -96,15 +96,17 @@ export class IndexDBStorage {
             })
           }
           storeRes.onsuccess = () => {
-            log(LogType.Success, [`存入成功 name: ${name} value: `, value])
-            resolve()
+            this.log(LogType.Success, [`存入成功 name: ${name} value: `, value])
+            resolve(undefined)
           }
           storeRes.onerror = (er) => {
-            log(LogType.Warn, [`存入失败 name: ${name} value: `, value, 'error:', er])
+            this.log(LogType.Warn, [`存入失败 name: ${name} value: `, value, 'error:', er])
+            resolve('存入失败')
           }
         }
         res.onerror = (er) => {
-          log(LogType.Warn, [`存入失败 name: ${name} value: `, value, 'error:', er])
+          this.log(LogType.Warn, [`存入失败 name: ${name} value: `, value, 'error:', er])
+          resolve('存入失败')
         }
       })
     }
@@ -112,23 +114,24 @@ export class IndexDBStorage {
 
   /** 获取 */
   public async getItem<V = any>(name: string): Promise<V | undefined> {
-    const { log, storeName, open, isSupported } = this
+    const { storeName, isSupported } = this
     if (!isSupported) {
       return
     }
 
-    const db = await open()
+    const db = await this.open()
     if (db) {
       const transaction = db.transaction(storeName, 'readwrite')
       const store = transaction.objectStore(storeName)
       const res = store.get(name)
       return new Promise((resolve) => {
         res.onsuccess = () => {
+          this.log(LogType.Success, [`读取成功 name: ${name} value: `, res.result])
           resolve(res.result)
         }
         res.onerror = (er) => {
-          log(LogType.Warn, [`读取失败 name: ${name} error:`, er])
-          resolve()
+          this.log(LogType.Warn, [`读取失败 name: ${name} error:`, er])
+          resolve(undefined)
         }
       })
     }

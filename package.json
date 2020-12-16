@@ -51,7 +51,7 @@
     "typescript": "^3.8.3",
     "yyl-release": "0.1.0"
   },
-  "name": "indexdbStorage",
+  "name": "indexdb-storage",
   "description": "use indexdb like localstorage",
   "repository": "https://github.com/jackness1208/indexdbStorage.git",
   "author": "liudaojie <liudaojie@yy.com>",
