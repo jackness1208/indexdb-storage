@@ -1,5 +1,5 @@
 /*!
- * indexdb-storage esm 0.1.0
+ * indexdb-storage esm 0.1.1
  * (c) 2020 - 2020 jackness
  * Released under the MIT License.
  */
@@ -197,8 +197,9 @@ var IndexDBStorage = /** @class */ (function () {
                             res_1 = store.get(name);
                             return [2 /*return*/, new Promise(function (resolve) {
                                     res_1.onsuccess = function () {
-                                        _this.log(LogType.Success, ["\u8BFB\u53D6\u6210\u529F name: " + name + " value: ", res_1.result]);
-                                        resolve(res_1.result);
+                                        var _a, _b;
+                                        _this.log(LogType.Success, ["\u8BFB\u53D6\u6210\u529F name: " + name + " value: ", (_a = res_1.result) === null || _a === void 0 ? void 0 : _a.value]);
+                                        resolve((_b = res_1.result) === null || _b === void 0 ? void 0 : _b.value);
                                     };
                                     res_1.onerror = function (er) {
                                         _this.log(LogType.Warn, ["\u8BFB\u53D6\u5931\u8D25 name: " + name + " error:", er]);
