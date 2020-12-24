@@ -126,8 +126,8 @@ export class IndexDBStorage {
       const res = store.get(name)
       return new Promise((resolve) => {
         res.onsuccess = () => {
-          this.log(LogType.Success, [`读取成功 name: ${name} value: `, res.result])
-          resolve(res.result)
+          this.log(LogType.Success, [`读取成功 name: ${name} value: `, res.result?.value])
+          resolve(res.result?.value)
         }
         res.onerror = (er) => {
           this.log(LogType.Warn, [`读取失败 name: ${name} error:`, er])
