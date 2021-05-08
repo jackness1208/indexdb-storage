@@ -54,6 +54,6 @@
   "name": "indexdb-storage",
   "description": "use indexdb like localstorage",
   "repository": "https://github.com/jackness1208/indexdbStorage.git",
-  "author": "liudaojie <liudaojie@yy.com>",
+  "author": "jackness1208",
   "license": "MIT"
 }
